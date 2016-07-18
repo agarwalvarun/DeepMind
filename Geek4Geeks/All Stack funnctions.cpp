@@ -1,21 +1,57 @@
 #include<iostream>
-#include<stack>
 using namespace std;
-int main()
+int arr[100],index=0;
+void createStack()
 {
-    stack<int> s1,s2;
-    int val=0;
+    int val;
     cin>>val;
-    while(val!=-1)
+    for(int i=index;val!=-1;i++)
     {
-        s1.push(val);
+        arr[i]=val;
+        index=i;
         cin>>val;
     }
-    while(!s1.empty())
+}
+int top_stack()
+{
+    if(is_stack_empty())
     {
-        s2.push(s1.top());
-        s1.pop();
-        cout<<s2.top()<<"   ";
+        return -1;
     }
+   return arr[index];
+}
+void push_stack(int val)
+{
+    if (index==0)
+    {
+        arr[index]=val;
+    }
+    else
+    {
+        index++;
+        arr[index]=val;
+    }
+    return ;
+}
+void pop_stack()
+{
+    index--;
+}
+bool is_stack_empty()
+{
+    if (index==0)
+    {
+        return true;
+    }
+    return false;
+}
+int main()
+{
+    createStack();
+    int top=top_stack();
+    cout<<top<<endl;
+    pop_stack();
+    top=top_stack();
+    cout<<top<<endl;
     return 0;
 }
