@@ -12,6 +12,14 @@ void createStack()
         cin>>val;
     }
 }
+bool is_stack_empty()
+{
+    if (index==0)
+    {
+        return true;
+    }
+    return false;
+}
 int top_stack()
 {
     if(is_stack_empty())
@@ -35,23 +43,16 @@ void push_stack(int val)
 }
 void pop_stack()
 {
-    index--;
-}
-bool is_stack_empty()
-{
-    if (index==0)
+    if (is_stack_empty())
     {
-        return true;
+        return;
     }
-    return false;
+    index--;
+    return;
 }
+
 int main()
 {
     createStack();
-    int top=top_stack();
-    cout<<top<<endl;
-    pop_stack();
-    top=top_stack();
-    cout<<top<<endl;
     return 0;
 }
