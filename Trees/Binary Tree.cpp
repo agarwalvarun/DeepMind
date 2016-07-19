@@ -1,5 +1,6 @@
 #include<iostream>
 #include<queue>
+#include<stack>
 using namespace std;
 struct Node
 {
@@ -104,6 +105,131 @@ void printLevelOrder(Node *root)
     }
     return;
 }
+void printIterativeInOrder(Node * root)
+{
+    Node * currNode=root;
+    stack<Node *> S;
+    queue<int> Q;
+    S.push(currNode);
+    currNode=S.top();
+    while(!S.empty())
+    {
+        currNode=S.top();
+        if(currNode->left!=0)
+        {
+            S.push(currNode->left);
+            continue;
+        }
+        else
+        {
+            Q.push(currNode->data);
+        }
+        if(currNode->right!=0)
+        {
+            S.pop();
+            S.push(currNode->right);
+            continue;
+        }
+        S.pop();
+    }
+}
+void RootToLeafSum_helper(Node * currNode,Node * root, int val,int sum, stack<int> &S, stack<int> &final_S, bool &flag)
+{
+    sum+=currNode->data;
+    S.push(currNode->data);
+    if(currNode->left==0 && currNode->right==0)
+    {
+        if(sum==val)
+        {
+            cout<<sum<<endl;
+            if(!flag)
+            {
+                stack<int> temp=S;
+                while(!temp.empty())
+                {
+                    final_S.push(temp.top());
+                    temp.pop();
+                }
+                flag=true;
+            }
+            return;
+        }
+        S.pop();
+        return;
+    }
+    if (currNode->left!=0)
+    {
+        RootToLeafSum_helper(currNode->left,root,val,sum,S,final_S,flag);
+    }
+    if(currNode->right!=0)
+    {
+        RootToLeafSum_helper(currNode->right,root,val,sum,S,final_S,flag);
+    }
+    S.pop();
+}
+void RootToLeafSum(Node * root)
+{
+    int val,sum=0;
+    stack<int> S,final_S;
+    bool flag=false;
+    cout<<"Enter the sum to be checked";
+    cin>>val;
+    RootToLeafSum_helper(root,root, val,sum, S,final_S,flag);
+    if(flag)
+    {
+        cout<<"YES      ";
+        while(!final_S.empty())
+        {
+            cout<<final_S.top()<<"   ";
+            final_S.pop();
+        }
+    }
+    else
+    {
+        cout<<"no";
+    }
+    return;
+}
+void height_helper(Node * root, stack<int> &s,int h)
+{
+    Node * currNode=root;
+    h++;
+    if(currNode->left==0 && currNode->right==0)
+    {
+        s.push(h);
+        return;
+    }
+    if(currNode->left!=0)
+    {
+        height_helper(currNode->left,s,h);
+    }
+    if(currNode->right!=0)
+    {
+        height_helper(currNode->right,s,h);
+    }
+    return;
+}
+int height(Node * root)
+{
+    stack<int> s;
+    int h=0;
+    height_helper(root, s,h);
+    h=0;
+    while(!s.empty())
+    {
+        if(h<=s.top())
+        {
+            h=s.top();
+            //cout<<"here     "<<h<<endl;
+        }
+        s.pop();
+    }
+    return h-1;
+}
+bool sameTree(Node * currNodeA, Node * currNodeB)
+{
+    sameTree_helper()
+}
 int main()
 {
     Node * root;
@@ -112,5 +238,8 @@ int main()
     //printPreOrder(root);
     //printInOrder(root);
     //printPostOrder(root);
-    printLevelOrder(root);
+    //printLevelOrder(root);
+    //int h=height(root);
+    //cout<<"height of the tree is    "<<h<<endl;
+    //RootToLeafSum(root);
 }
