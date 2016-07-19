@@ -247,6 +247,17 @@ void sameTree()
     rootB = createTree();
     sameTree_helper(rootA,dA,cA,'l');
     sameTree_helper(rootB,dB,cB,'l');
+//    while(!cA.empty())
+//    {
+//        cout<<cA.front()<<"   ";
+//        cA.pop();
+//    }
+//    cout<<endl;
+//    while(!cB.empty())
+//    {
+//        cout<<cB.front()<<"   ";
+//        cB.pop();
+//    }
     while(1)
     {
         if (dA.front()==dB.front() && cA.front()==cB.front() && !dA.empty() && !dB.empty())
