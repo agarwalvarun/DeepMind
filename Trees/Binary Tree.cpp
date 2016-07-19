@@ -226,14 +226,57 @@ int height(Node * root)
     }
     return h-1;
 }
-bool sameTree(Node * currNodeA, Node * currNodeB)
+void sameTree_helper(Node * currNode, queue<int> &d,queue<char> &c, char ch)
 {
-    sameTree_helper()
+    if(currNode==0)
+    {
+        return;
+    }
+    sameTree_helper(currNode->left,d,c,'l');
+    d.push(currNode->data);
+    c.push(ch);
+    sameTree_helper(currNode->right,d,c,'r');
+}
+void sameTree()
+{
+    Node * rootA, * rootB;
+    queue<int> dA,dB;
+    queue<char> cA,cB;
+    bool flag=false;
+    rootA= createTree();
+    rootB = createTree();
+    sameTree_helper(rootA,dA,cA,'l');
+    sameTree_helper(rootB,dB,cB,'l');
+    while(1)
+    {
+        if (dA.front()==dB.front() && cA.front()==cB.front() && !dA.empty() && !dB.empty())
+        {
+            dA.pop();
+            dB.pop();
+            cA.pop();
+            cB.pop();
+            continue;
+        }
+        if(dA.empty() && dB.empty())
+        {
+            flag=true;
+        }
+        break;
+    }
+    if(flag)
+    {
+        cout<<"same"<<endl;
+    }
+    else
+    {
+        cout<<"not same"<<endl;
+    }
+    return;
 }
 int main()
 {
     Node * root;
-    root=createTree();
+    //root=createTree();
     //cout<<root->data;
     //printPreOrder(root);
     //printInOrder(root);
@@ -242,4 +285,5 @@ int main()
     //int h=height(root);
     //cout<<"height of the tree is    "<<h<<endl;
     //RootToLeafSum(root);
+    sameTree();
 }
