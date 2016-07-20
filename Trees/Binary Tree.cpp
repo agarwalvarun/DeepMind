@@ -234,7 +234,7 @@ void sameTree_helper(Node * currNode, queue<int> &d,queue<char> &c, char ch)
     }
     sameTree_helper(currNode->left,d,c,'l');
     d.push(currNode->data);
-    c.push(ch);
+    c.  push(ch);
     sameTree_helper(currNode->right,d,c,'r');
 }
 void sameTree()
@@ -284,10 +284,96 @@ void sameTree()
     }
     return;
 }
+int DepthOfNode_helper(Node * currNode,Node * finalNode, int d)
+{
+    static int ans=-1;
+    if (currNode==0)
+    {
+        return ans;
+    }
+    d++;
+    if(currNode->data==finalNode->data && currNode->left==finalNode->left && currNode->right==finalNode->right)
+    {
+        ans=d;
+        return ans;
+    }
+    DepthOfNode_helper(currNode->left,finalNode,d);
+    DepthOfNode_helper(currNode->right,finalNode,d);
+    return ans;
+}
+int DepthOfNode(Node * root, Node * finalNode)
+{
+    int d=-1,ans;
+    ans=DepthOfNode_helper(root,finalNode,d);
+   // cout<<ans;
+    return ans;
+}
+void LevelOrderTraversalInSpiralOrder(Node * root)
+{
+//    Node * currNode=root;
+//    int i=DepthOfNode(root, currNode);
+//    queue<Node *> Q;
+//    Q.push(currNode);
+//    while(!Q.empty())
+//    {
+//        currNode=Q.front();
+//        cout<<currNode->data<<"     ";
+//        i=DepthOfNode(root, currNode);
+//        if(i%2!=0)
+//        {
+//            if(currNode->left!=0)
+//            {
+//                Q.push(currNode->left);
+//            }
+//            if(currNode->right!=0)
+//            {
+//                Q.push(currNode->right);
+//            }
+//        }
+//        else
+//        {
+//            if(currNode->right!=0)
+//            {
+//                Q.push(currNode->right);
+//            }
+//            if(currNode->left!=0)
+//            {
+//                Q.push(currNode->left);
+//            }
+//        }
+//        Q.pop();
+//    }
+//    return;
+}
+void printLeftView_helper(Node *currNode, int level)
+{
+    static int max_level=0;
+    if(currNode==0)
+    {
+        return;
+    }
+    if(level==0 && max_level==0)
+    {
+        cout<<currNode->data<<"     ";
+    }
+    else if(level>max_level)
+    {
+        max_level=level;
+        cout<<currNode->data<<"     ";
+    }
+    printLeftView_helper(currNode->left,level+1);
+    printLeftView_helper(currNode->right,level+1);
+    return;
+}
+void printLeftView(Node * root)
+{
+    int level=0;
+    printLeftView_helper(root, level);
+}
 int main()
 {
     Node * root;
-    //root=createTree();
+    root=createTree();
     //cout<<root->data;
     //printPreOrder(root);
     //printInOrder(root);
@@ -296,5 +382,8 @@ int main()
     //int h=height(root);
     //cout<<"height of the tree is    "<<h<<endl;
     //RootToLeafSum(root);
-    sameTree();
+    //sameTree();
+    //DepthOfNode(root,root->left->left);
+    //LevelOrderTraversalInSpiralOrder(root);
+    printLeftView(root);
 }
