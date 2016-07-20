@@ -109,28 +109,28 @@ void printIterativeInOrder(Node * root)
 {
     Node * currNode=root;
     stack<Node *> S;
-    queue<int> Q;
-    S.push(currNode);
-    currNode=S.top();
-    while(!S.empty())
+    bool flag=false;
+    while(!flag)
     {
-        currNode=S.top();
-        if(currNode->left!=0)
+        if(currNode!=0)
         {
-            S.push(currNode->left);
-            continue;
+            S.push(currNode);
+            currNode=currNode->left;
         }
         else
         {
-            Q.push(currNode->data);
+            if(!S.empty())
+            {
+                currNode=S.top();
+                S.pop();
+                cout<<currNode->data<<"     ";
+                currNode=currNode->right;
+            }
+            else
+            {
+                flag=true;
+            }
         }
-        if(currNode->right!=0)
-        {
-            S.pop();
-            S.push(currNode->right);
-            continue;
-        }
-        S.pop();
     }
 }
 void RootToLeafSum_helper(Node * currNode,Node * root, int val,int sum, stack<int> &S, stack<int> &final_S, bool &flag)
@@ -385,5 +385,6 @@ int main()
     //sameTree();
     //DepthOfNode(root,root->left->left);
     //LevelOrderTraversalInSpiralOrder(root);
-    printLeftView(root);
+    //printLeftView(root);
+    //printIterativeInOrder(root);
 }
