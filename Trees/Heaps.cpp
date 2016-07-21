@@ -83,8 +83,18 @@ bool isMinHeap(Node * root)
     }
     return flag;
 }
+void printArr(int arr[], int n)
+{
+    for (int i=0;i<n;i++)
+    {
+        cout<<arr[i]<<"     ";
+    }
+    cout<<endl;
+    return;
+}
 void heapify(int arr[],int currIndex, int n)
 {
+    //printArr(arr,n);
     int leftChild=2*currIndex+1;
     int rightChild=2*currIndex+2, largest = currIndex;
     if (leftChild>n)
@@ -113,6 +123,22 @@ void heapify(int arr[],int currIndex, int n)
     heapify(arr, largest, n);
     return;
 }
+
+void HeapSort(int arr [], int n)
+{
+    for (int i=(n/2-1);i>=0;i--)
+    {
+        heapify(arr,i,n);
+    }
+    for (int i=n-1;i>=0;i--)
+    {
+        int temp=arr[i];
+        arr[i]=arr[0];
+        arr[0]=temp;
+        heapify(arr,0, i);
+    }
+
+}
 int main()
 {
    // Node * root = createTree();
@@ -133,10 +159,8 @@ int main()
     {
         cin>>arr[i];
     }
-    heapify(arr,0,n);
-    for (int i=0;i<n;i++)
-    {
-        cout<<arr[i]<<"     ";
-    }
+    //heapify(arr,0,n);
+    HeapSort(arr,n);
+    printArr(arr, n);
     return 0;
 }
